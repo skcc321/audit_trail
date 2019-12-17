@@ -1,13 +1,14 @@
 class AuditLog
- include Mongoid::Document
+  include Mongoid::Document
+  include Mongoid::Attributes::Dynamic
 
- field :auditable_id, type: Integer
- field :auditable_type, type: String
- field :action, type: String
- field :audit_changes, type: String
- field :context, type: Hash
-
-
+#  field :auditable_id, type: Integer
+#  field :auditable_type, type: String
+#  field :action, type: String
+#  field :audit_changes, type: String
+#  field :context, type: Hash
+#
+#
  #                  :id => 4643365,
  #        :auditable_id => 154254,
  #      :auditable_type => "ShipmentDevice",

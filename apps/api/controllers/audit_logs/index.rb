@@ -4,8 +4,12 @@ module Api
       class Index
         include Api::Action
 
+        expose :audit_logs
+
         def call(params)
-          self.body = AuditLog.count.to_s
+          self.format = :json
+
+          @audit_logs = AuditLog.all
         end
       end
     end
