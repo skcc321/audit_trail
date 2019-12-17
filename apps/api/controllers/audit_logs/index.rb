@@ -4,12 +4,18 @@ module Api
       class Index
         include Api::Action
 
-        expose :audit_logs
+        expose :audit_targets
+
+        params do
+          optional(:auditable_id).filled(:int?)
+          optional(:auditable_type).filled(:str?)
+          optional(:action).filled(:str?)
+        end
 
         def call(params)
           self.format = :json
 
-          @audit_logs = AuditLog.all
+          @audit_targets = AuditTarget.where(params.to_h)
         end
       end
     end

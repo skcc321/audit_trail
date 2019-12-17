@@ -1,13 +1,11 @@
-class AuditLog
+class AuditChange
   include Mongoid::Document
   include Mongoid::Attributes::Dynamic
+  include Mongoid::Timestamps::Short
 
-#  field :auditable_id, type: Integer
-#  field :auditable_type, type: String
-#  field :action, type: String
-#  field :audit_changes, type: String
-#  field :context, type: Hash
-#
+  embedded_in :audit_target
+
+  # field :action, type: String
 #
  #                  :id => 4643365,
  #        :auditable_id => 154254,

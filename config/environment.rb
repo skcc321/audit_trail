@@ -1,10 +1,14 @@
 require 'bundler/setup'
 require 'hanami/setup'
+require "hanami/middleware/body_parser"
 require 'mongoid'
 require_relative '../lib/audit_trail'
 require_relative '../apps/api/application'
 
 Hanami.configure do
+  # body json
+  middleware.use Hanami::Middleware::BodyParser, :json
+
   mount Api::Application, at: '/'
 
   environment :development do

@@ -8,8 +8,8 @@ module Api
 
         def render
           raw JSON.generate(
-            items: audit_logs.map do |audit_log|
-              audit_log.attributes
+            audit_targets.map do |audit_target|
+              audit_target.attributes
             end
           )
         end

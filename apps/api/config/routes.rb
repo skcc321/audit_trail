@@ -4,4 +4,4 @@
 # Example:
 # get '/hello', to: ->(env) { [200, {}, ['Hello from Hanami!']] }
 
-resources :audit_logs
+resources :audit_logs, defaults: { format: "json" }
