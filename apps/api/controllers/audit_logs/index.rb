@@ -9,6 +9,8 @@ module Api
         params do
           optional(:auditable_id).filled(:int?)
           optional(:auditable_type).filled(:str?)
+          optional(:accociated_id).filled(:int?)
+          optional(:accociated_type).filled(:str?)
           optional(:action).filled(:str?)
         end
 

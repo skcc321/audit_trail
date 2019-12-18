@@ -14,10 +14,14 @@ module Api
           halt 422 unless params.valid?
 
           # find or create appropriate audit target
-          audit_target = AuditTarget.find_or_create_by(
+          audit_target = AuditTarget.create_with(
+            accociated_id: params[:accociated_id],
+            accociated_type: params[:accociated_type]
+          ).find_or_create_by(
             auditable_id: params[:auditable_id],
             auditable_type: params[:auditable_type]
           )
+          byebug
 
           attrs = params.to_hash.except(:auditable_id, :auditable_type)
 

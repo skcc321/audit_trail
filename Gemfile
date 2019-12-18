@@ -12,12 +12,11 @@ end
 
 group :test, :development do
   gem "dotenv", "~> 2.4"
-  gem "byebug"
+  gem "pry"
 end
 
 group :test do
   gem "rspec"
-  gem "capybara"
 end
 
 group :production do
