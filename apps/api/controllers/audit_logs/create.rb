@@ -19,10 +19,10 @@ module Api
             auditable_type: params[:auditable_type]
           )
 
+          attrs = params.to_hash.except(:auditable_id, :auditable_type)
+
           # create audit change for it
-          audit_target.audit_changes.create(
-            params.to_hash.except(:auditable_id, :auditable_type)
-          )
+          audit_target.audit_changes.create(attrs)
 
           self.body = "OK"
         end
