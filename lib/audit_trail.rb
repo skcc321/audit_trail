@@ -1,6 +1,3 @@
-# # load Mongoid
-Mongoid.load!(File.join(__dir__, "../config/mongoid.yml"), ENV["HANAMI_ENV"])
-
 module AuditTrail
   module Mongoid
     class Repository

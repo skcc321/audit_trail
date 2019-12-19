@@ -19,12 +19,14 @@ RSpec.describe Api::Controllers::AuditLogs::Create do
     }
   }
 
+  let(:repository) { AuditTargetRepository.new }
+
   describe "#call" do
     context "with valid params" do
       it "create audit target" do
         expect {
           subject.call(user_audit_params)
-        }.to change { AuditTarget.count }.by(1)
+        }.to change { repository.count }.by(1)
         #
         # binding.pry
         # subject.call(profile_audit_params)

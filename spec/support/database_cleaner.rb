@@ -6,8 +6,6 @@ DatabaseCleaner[:mongoid, { connection: Mongoid.clients.dig("default", "database
 
 RSpec.configure do |config|
   config.before(:suite) do
-    FactoryBot.find_definitions
-
     DatabaseCleaner[:mongoid].strategy = :truncation
     DatabaseCleaner[:mongoid].clean_with(:truncation)
   end

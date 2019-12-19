@@ -14,10 +14,14 @@ module Api
           optional(:action).filled(:str?)
         end
 
+        def initialize(repository = AuditTargetRepository.new)
+          @repository = repository
+        end
+
         def call(params)
           self.format = :json
 
-          @audit_targets = AuditTarget.where(params.to_h)
+          @audit_targets = repository.where(params.to_h)
         end
       end
     end

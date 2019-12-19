@@ -3,6 +3,7 @@ source "https://rubygems.org"
 gem "rake"
 gem "hanami"
 gem "mongoid"
+gem "sidekiq"
 
 group :development do
   # Code reloading

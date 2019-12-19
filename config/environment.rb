@@ -2,8 +2,12 @@ require 'bundler/setup'
 require 'hanami/setup'
 require "hanami/middleware/body_parser"
 require 'mongoid'
+
 require_relative '../lib/audit_trail'
 require_relative '../apps/api/application'
+
+# load Mongoid
+Mongoid.load!(File.join(__dir__, "mongoid.yml"), ENV["HANAMI_ENV"])
 
 Hanami.configure do
   # body json

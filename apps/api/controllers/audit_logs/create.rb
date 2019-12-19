@@ -18,7 +18,7 @@ module Api
           halt 422 unless params.valid?
 
           # find or create appropriate audit target
-          @audit_target = @repository.submit_changes(params.to_h)
+          @audit_target = repository.submit_changes(params.to_h)
 
           self.body = "OK"
         end
