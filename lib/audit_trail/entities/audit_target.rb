@@ -15,6 +15,7 @@ class AuditTarget
   index({ auditable_id: 1, auditable_type: 1 }, { unique: true })
   index({ accociated_id: 1, accociated_type: 1 }, { unique: true })
 
+  # move that to repository
   def parent
     AuditTarget.find_by(auditable_id: accociated_id, auditable_type: accociated_type)
   end
