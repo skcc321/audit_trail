@@ -4,5 +4,10 @@ FactoryBot.define do
     auditable_type { "Profile" }
     accociated_id { 1 }
     accociated_type { "User" }
+
+
+    initialize_with do
+      AuditTargetRepository.new.new(attributes)
+    end
   end
 end

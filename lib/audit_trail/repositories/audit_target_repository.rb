@@ -12,7 +12,8 @@ class AuditTargetRepository < AuditTrail::Mongoid::Repository
     change_attrs = attrs.except(:auditable_id, :auditable_type)
 
     # create audit change for it
-    audit_target.audit_changes.create(change_attrs)
+    audit_change_registry = AuditChangeRepository.new(audit_target)
+    audit_change_registry.create(change_attrs)
 
     audit_target
   end
