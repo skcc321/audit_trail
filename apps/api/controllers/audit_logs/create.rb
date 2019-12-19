@@ -7,7 +7,7 @@ module Api
         params do
           required(:auditable_id).filled(:int?)
           required(:auditable_type).filled(:str?)
-          required(:action).filled(:str?)
+          required(:action) { filled? & included_in?(AuditChange::ACTIONS) }
         end
 
         def call(params)
@@ -21,7 +21,6 @@ module Api
             auditable_id: params[:auditable_id],
             auditable_type: params[:auditable_type]
           )
-          byebug
 
           attrs = params.to_hash.except(:auditable_id, :auditable_type)
 

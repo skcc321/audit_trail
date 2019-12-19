@@ -1,7 +1,19 @@
+# frozen_string_literal
+
 class AuditChange
   include Mongoid::Document
   include Mongoid::Attributes::Dynamic
   include Mongoid::Timestamps::Short
+
+  CREATE_ACTION = "create".freeze
+  UPDATE_ACTION = "update".freeze
+  DESTROY_ACTION = "destroy".freeze
+
+  ACTIONS = [
+    CREATE_ACTION,
+    UPDATE_ACTION,
+    DESTROY_ACTION
+  ]
 
   embedded_in :audit_target
 
