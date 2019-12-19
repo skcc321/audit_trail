@@ -3,8 +3,9 @@ require "spec_helper"
 RSpec.describe Api::Controllers::AuditLogs::Index do
   let!(:user) { create(:audit_target, :user) }
   let!(:profile) { create(:audit_target, :profile) }
+  let(:format)  { 'application/json' }
 
-  let(:request) { subject.call(params) }
+  let(:request) { subject.call(params.merge('HTTP_ACCEPT' => format)) }
 
   describe "#call" do
     context "with valid params" do
@@ -19,6 +20,22 @@ RSpec.describe Api::Controllers::AuditLogs::Index do
 
       it "create audit target" do
         expect(subject.audit_targets).to eq([user])
+      end
+    end
+
+
+    context "with invalid params" do
+      let(:params) {
+        {
+          auditable_id: user.auditable_id,
+          accociated_type: user.auditable_type,
+        }
+      }
+
+      before { request }
+
+      it "create audit target" do
+        expect(subject.params.errors).to eq({ critheria: ["must be filled"] })
       end
     end
   end

@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Api::Views::AuditLogs::Index do
   let(:audit_target_attrs) {
-    Hash[auditable_id: 1, auditable_type: "User"]
+    Hash[auditable_id: 1, accociated_type: "User"]
   }
 
   let(:exposures) {
