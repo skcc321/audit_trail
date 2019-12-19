@@ -1,7 +1,8 @@
 require "database_cleaner"
 
-ENV["DATABASE_URL"] = "mongodb://localhost:27017"
-DatabaseCleaner[:mongoid, { connection: "hanami_trial_test" }]
+# setup connection for database cleaner
+ENV["DATABASE_URL"] = "mongodb://#{Mongoid.clients.dig('default', 'hosts').first}"
+DatabaseCleaner[:mongoid, { connection: Mongoid.clients.dig("default", "database") }]
 
 RSpec.configure do |config|
   config.before(:suite) do
