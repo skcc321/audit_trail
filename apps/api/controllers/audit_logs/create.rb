@@ -15,12 +15,15 @@ module Api
         end
 
         def call(params)
-          halt 422 unless params.valid?
+          if params.valid?
+            # find or create appropriate audit target
+            @audit_target = @repository.submit_changes(params.to_h)
 
-          # find or create appropriate audit target
-          @audit_target = @repository.submit_changes(params.to_h)
-
-          self.body = "OK"
+            self.body = JSON.generate(result: "OK")
+          else
+            self.body = JSON.generate(params.errors)
+            self.status = 422
+          end
         end
       end
     end

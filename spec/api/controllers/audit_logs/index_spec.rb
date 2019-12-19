@@ -34,8 +34,8 @@ RSpec.describe Api::Controllers::AuditLogs::Index do
 
       before { request }
 
-      it "create audit target" do
-        expect(subject.params.errors).to eq({ critheria: ["must be filled"] })
+      it "return proper error message" do
+        expect(request.last).to eq([{ critheria: ["must be filled"] }.to_json])
       end
     end
   end

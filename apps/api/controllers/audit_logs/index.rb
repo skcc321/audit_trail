@@ -29,9 +29,12 @@ module Api
         end
 
         def call(params)
-          self.format = :json
-
-          @audit_targets = @repository.where(params.to_h)
+          if params.valid?
+            @audit_targets = @repository.where(params.to_h)
+          else
+            self.body = JSON.generate(params.errors)
+            self.status = 422
+          end
         end
       end
     end
