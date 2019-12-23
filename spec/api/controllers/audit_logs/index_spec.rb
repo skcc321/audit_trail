@@ -13,13 +13,14 @@ RSpec.describe Api::Controllers::AuditLogs::Index do
         {
           auditable_id: user.auditable_id,
           auditable_type: user.auditable_type,
+          accociated: ["Profile"],
         }
       }
 
       before { request }
 
       it "create audit target" do
-        expect(subject.audit_changes).to eq([user])
+        expect(subject.audit_changes).to eq([user, profile])
       end
     end
 
@@ -28,14 +29,14 @@ RSpec.describe Api::Controllers::AuditLogs::Index do
       let(:params) {
         {
           auditable_id: user.auditable_id,
-          accociated_type: user.auditable_type,
+          unknown_attr: user.auditable_type,
         }
       }
 
       before { request }
 
       it "return proper error message" do
-        expect(request.last).to eq([{ critheria: ["must be filled"] }.to_json])
+        expect(request.last).to eq([{ auditable_type: ["is missing"] }.to_json])
       end
     end
   end
