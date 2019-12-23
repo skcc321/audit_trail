@@ -3,17 +3,7 @@
 class AuditChange
   include Mongoid::Document
   include Mongoid::Attributes::Dynamic
-  include Mongoid::Timestamps::Short
-
-  CREATE_ACTION = "create".freeze
-  UPDATE_ACTION = "update".freeze
-  DESTROY_ACTION = "destroy".freeze
-
-  ACTIONS = [
-    CREATE_ACTION,
-    UPDATE_ACTION,
-    DESTROY_ACTION
-  ].freeze
+  include Mongoid::Timestamps::Created::Short
 
   field :auditable_id, type: Integer
   field :auditable_type, type: String
@@ -22,9 +12,9 @@ class AuditChange
   field :accociated_type, type: String
 
   # TTL index on the above field.
-  index({ u_at: 1 }, { expire_after_seconds: 2.days })
-  index({ auditable_id: 1, auditable_type: 1 }, { unique: true })
-  index({ accociated_id: 1, accociated_type: 1 }, { unique: true })
+  index({ c_at: 1 }, { expire_after_seconds: 2.days })
+  index({ auditable_id: 1, auditable_type: 1 })
+  index({ accociated_id: 1, accociated_type: 1, auditable_type: 1 })
 
   # field :action, type: String
 #

@@ -11,7 +11,7 @@ RSpec.describe Api::Controllers::AuditLogs::Create do
         {
           auditable_type: "User",
           auditable_id: 1,
-          action: AuditChange::CREATE_ACTION
+          action: Api::Controllers::AuditLogs::Create::CREATE_ACTION
         }
       }
 

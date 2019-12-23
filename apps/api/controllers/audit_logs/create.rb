@@ -4,10 +4,21 @@ module Api
       class Create
         include Api::Action
 
+        CREATE_ACTION = "create".freeze
+        UPDATE_ACTION = "update".freeze
+        DESTROY_ACTION = "destroy".freeze
+
+        ACTIONS = [
+          CREATE_ACTION,
+          UPDATE_ACTION,
+          DESTROY_ACTION
+        ].freeze
+
+
         params do
           required(:auditable_id).filled(:int?)
           required(:auditable_type).filled(:str?)
-          required(:action) { filled? & included_in?(AuditChange::ACTIONS) }
+          required(:action) { filled? & included_in?(ACTIONS) }
         end
 
         def initialize(repository = AuditChangeRepository.new)
