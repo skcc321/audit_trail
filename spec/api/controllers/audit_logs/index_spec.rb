@@ -1,8 +1,8 @@
 require "spec_helper"
 
 RSpec.describe Api::Controllers::AuditLogs::Index do
-  let!(:user) { create(:audit_target, :user) }
-  let!(:profile) { create(:audit_target, :profile) }
+  let!(:user) { create(:audit_change, :user) }
+  let!(:profile) { create(:audit_change, :profile) }
   let(:format)  { 'application/json' }
 
   let(:request) { subject.call(params.merge('HTTP_ACCEPT' => format)) }
@@ -19,7 +19,7 @@ RSpec.describe Api::Controllers::AuditLogs::Index do
       before { request }
 
       it "create audit target" do
-        expect(subject.audit_targets).to eq([user])
+        expect(subject.audit_changes).to eq([user])
       end
     end
 

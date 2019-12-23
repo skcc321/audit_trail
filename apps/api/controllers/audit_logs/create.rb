@@ -10,14 +10,14 @@ module Api
           required(:action) { filled? & included_in?(AuditChange::ACTIONS) }
         end
 
-        def initialize(repository = AuditTargetRepository.new)
+        def initialize(repository = AuditChangeRepository.new)
           @repository = repository
         end
 
         def call(params)
           if params.valid?
             # find or create appropriate audit target
-            @audit_target = @repository.submit_changes(params.to_h)
+            @audit_change = @repository.create(params.to_h)
 
             self.body = JSON.generate(result: "OK")
           else

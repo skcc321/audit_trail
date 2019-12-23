@@ -1,10 +1,9 @@
 require "spec_helper"
 
-RSpec.describe "audit_target assoc" do
-  let!(:target) { create(:audit_target, auditable_id: 1, auditable_type: "SomeType") }
-  let!(:change) { create(:audit_change, audit_target: target) }
-
+RSpec.describe AuditChange do
   it "works" do
-    expect(target.audit_changes).to include(change)
+    expect {
+      create(:audit_change, auditable_id: 1, auditable_type: "SomeType")
+    }.to change { AuditChangeRepository.new.count }.by(1)
   end
 end

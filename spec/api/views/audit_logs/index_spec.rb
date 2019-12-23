@@ -1,12 +1,12 @@
 require "spec_helper"
 
 RSpec.describe Api::Views::AuditLogs::Index do
-  let(:audit_target_attrs) {
+  let(:audit_change_attrs) {
     Hash[auditable_id: 1, accociated_type: "User"]
   }
 
   let(:exposures) {
-    Hash[audit_targets: [double('AuditTarget', attributes: audit_target_attrs)], params: {}]
+    Hash[audit_changes: [double('AuditChange', attributes: audit_change_attrs)], params: {}]
   }
 
   let(:template) { Hanami::View::Template.new('apps/api/templates/application.json.erb') }
@@ -14,6 +14,6 @@ RSpec.describe Api::Views::AuditLogs::Index do
   let(:rendered) { view.render }
 
   it "renders audit_targets as json" do
-    expect(rendered).to eq([audit_target_attrs].to_json)
+    expect(rendered).to eq([audit_change_attrs].to_json)
   end
 end

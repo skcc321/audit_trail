@@ -4,7 +4,7 @@ module Api
       class Index
         include Api::Action
 
-        expose :audit_targets
+        expose :audit_changes
 
         params do
           optional(:auditable_id).filled(:int?)
@@ -24,13 +24,13 @@ module Api
           end
         end
 
-        def initialize(repository = AuditTargetRepository.new)
+        def initialize(repository = AuditChangeRepository.new)
           @repository = repository
         end
 
         def call(params)
           if params.valid?
-            @audit_targets = @repository.where(params.to_h)
+            @audit_changes = @repository.where(params.to_h)
           else
             self.body = JSON.generate(params.errors)
             self.status = 422

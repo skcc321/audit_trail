@@ -1,7 +1,7 @@
 require "spec_helper"
 
 RSpec.describe Api::Controllers::AuditLogs::Create do
-  let(:repository) { AuditTargetRepository.new }
+  let(:repository) { AuditChangeRepository.new }
 
   let(:request) { subject.call(params) }
 
@@ -15,7 +15,7 @@ RSpec.describe Api::Controllers::AuditLogs::Create do
         }
       }
 
-      it "creates audit target" do
+      it "creates audit change" do
         expect { request }.to change { repository.count }.by(1)
       end
     end
@@ -28,7 +28,7 @@ RSpec.describe Api::Controllers::AuditLogs::Create do
         }
       }
 
-      it "does not create audit target" do
+      it "does not create audit change" do
         expect { request }.to change { repository.count }.by(0)
       end
 
