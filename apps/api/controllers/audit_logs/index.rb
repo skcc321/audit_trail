@@ -17,6 +17,8 @@ module Api
         end
 
         def call(params)
+          self.format = :json
+
           if params.valid?
             @audit_changes = @repository.find_with_related(params.to_h)
           else
