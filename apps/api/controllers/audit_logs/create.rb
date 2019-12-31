@@ -14,11 +14,15 @@ module Api
           DESTROY_ACTION
         ].freeze
 
-
         params do
-          required(:auditable_id).filled(:int?)
-          required(:auditable_type).filled(:str?)
-          required(:action) { filled? & included_in?(ACTIONS) }
+          required(:items).each do
+            schema do
+              required(:auditable_id).filled(:int?)
+              required(:auditable_type).filled(:str?)
+              required(:action) { filled? & included_in?(ACTIONS) }
+              # validate context as well
+            end
+          end
         end
 
         def initialize(repository = AuditChangeRepository.new)
@@ -28,7 +32,7 @@ module Api
         def call(params)
           if params.valid?
             # find or create appropriate audit target
-            @audit_change = @repository.create(params.to_h)
+            @audit_change = @repository.bulk_create(params.get(:items))
 
             self.body = JSON.generate(result: "OK")
           else

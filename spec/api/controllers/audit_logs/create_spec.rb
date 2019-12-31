@@ -9,9 +9,13 @@ RSpec.describe Api::Controllers::AuditLogs::Create do
     context "with valid params" do
       let(:params) {
         {
-          auditable_type: "User",
-          auditable_id: 1,
-          action: Api::Controllers::AuditLogs::Create::CREATE_ACTION
+          items: [
+            {
+              auditable_type: "User",
+              auditable_id: 1,
+              action: Api::Controllers::AuditLogs::Create::CREATE_ACTION
+            }
+          ]
         }
       }
 
@@ -23,8 +27,12 @@ RSpec.describe Api::Controllers::AuditLogs::Create do
     context "with invalid params" do
       let(:params) {
         {
-          auditable_id: 1,
-          action: "invalid"
+          items: [
+            {
+              auditable_id: 1,
+              action: "invalid"
+            }
+          ]
         }
       }
 
@@ -34,7 +42,7 @@ RSpec.describe Api::Controllers::AuditLogs::Create do
 
 
       it "return error message" do
-        expect(request.last).to eq([{auditable_type: ["is missing"], action: ["must be one of: create, update, destroy"] }.to_json])
+        expect(request.last).to eq([{ items: {"0" => {auditable_type: ["is missing"], action: ["must be one of: create, update, destroy"] }}}.to_json])
       end
     end
   end

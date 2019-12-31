@@ -14,4 +14,8 @@ class AuditChangeRepository < AuditTrail::Mongoid::Repository
       }
     )
   end
+
+  def bulk_create(items)
+    entity_klass.create(items)
+  end
 end
