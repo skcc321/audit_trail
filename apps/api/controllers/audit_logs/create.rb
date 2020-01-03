@@ -19,10 +19,41 @@ module Api
             schema do
               required(:auditable_id).filled(:int?)
               required(:auditable_type).filled(:str?)
+
+              optional(:accociated_id).filled(:int?)
+              optional(:accociated_type).filled(:str?)
+
               required(:action) { filled? & included_in?(ACTIONS) }
-              optional(:context)
-              optional(:changes)
-              # validate context as well
+
+              optional(:changes).maybe(:hash?)
+
+              optional(:context).schema do
+                optional(:uuid).maybe(:str?)
+
+                optional(:user).schema do
+                  optional(:id).maybe(:int?)
+                  optional(:name).maybe(:str?)
+                  optional(:email).maybe(:str?)
+                end
+                optional(:portal).schema do
+                  optional(:id).maybe(:int?)
+                  optional(:name).maybe(:str?)
+                end
+                optional(:rmo_client).schema do
+                  optional(:id).maybe(:int?)
+                  optional(:uuid).maybe(:str?)
+                  optional(:imei).maybe(:str?)
+                end
+                optional(:request).schema do
+                  optional(:ip).maybe(:str?)
+                  optional(:tag).maybe(:str?)
+                end
+                optional(:sidekiq).schema do
+                  optional(:klass).maybe(:str?)
+                  optional(:job)
+                  optional(:queue).maybe(:str?)
+                end
+              end
             end
           end
         end
@@ -36,11 +67,11 @@ module Api
             # find or create appropriate audit target
             @audit_change = @repository.bulk_create(params.get(:items))
 
+            Hanami.logger.debug(params.get(:items))
             self.body = JSON.generate(result: "OK")
           else
             # help to debug in development mode
             Hanami.logger.debug(params.errors)
-
             self.body = JSON.generate(params.errors)
             self.status = 422
           end
