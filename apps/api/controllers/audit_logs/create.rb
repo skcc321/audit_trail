@@ -27,31 +27,33 @@ module Api
 
               optional(:changes).maybe(:hash?)
 
-              optional(:context).schema do
+              optional(:ctx).schema do
                 optional(:uuid).maybe(:str?)
 
-                optional(:user).schema do
+                optional(:ousr).schema do
                   optional(:id).maybe(:int?)
-                  optional(:name).maybe(:str?)
+                  optional(:email).maybe(:str?)
+                end
+                optional(:usr).schema do
+                  optional(:id).maybe(:int?)
                   optional(:email).maybe(:str?)
                 end
                 optional(:portal).schema do
                   optional(:id).maybe(:int?)
                   optional(:name).maybe(:str?)
                 end
-                optional(:rmo_client).schema do
+                optional(:rmobot).schema do
                   optional(:id).maybe(:int?)
                   optional(:uuid).maybe(:str?)
                   optional(:imei).maybe(:str?)
                 end
-                optional(:request).schema do
+                optional(:rqst).schema do
                   optional(:ip).maybe(:str?)
                   optional(:tag).maybe(:str?)
                 end
-                optional(:sidekiq).schema do
+                optional(:bkjob).schema do
                   optional(:klass).maybe(:str?)
                   optional(:job)
-                  optional(:queue).maybe(:str?)
                 end
               end
             end
