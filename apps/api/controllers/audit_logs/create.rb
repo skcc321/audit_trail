@@ -69,11 +69,11 @@ module Api
             # find or create appropriate audit target
             @audit_change = @repository.bulk_create(params.get(:items))
 
-            Hanami.logger.debug(params.get(:items))
+            # Hanami.logger.debug(params.get(:items))
             self.body = JSON.generate(result: "OK")
           else
             # help to debug in development mode
-            Hanami.logger.debug(params.errors)
+            # Hanami.logger.debug(params.errors)
             self.body = JSON.generate(params.errors)
             self.status = 422
           end
