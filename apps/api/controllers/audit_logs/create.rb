@@ -20,6 +20,8 @@ module Api
               required(:auditable_id).filled(:int?)
               required(:auditable_type).filled(:str?)
               required(:action) { filled? & included_in?(ACTIONS) }
+              optional(:context)
+              optional(:changes)
               # validate context as well
             end
           end
@@ -36,6 +38,9 @@ module Api
 
             self.body = JSON.generate(result: "OK")
           else
+            # help to debug in development mode
+            Hanami.logger.debug(params.errors)
+
             self.body = JSON.generate(params.errors)
             self.status = 422
           end
